@@ -158,86 +158,76 @@ class App {
     inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
   }
   async _newWorkout(e) {
-    try {
-      e.preventDefault();
-      //Get date from form
-      const type = inputType.value;
-      const distance = +inputDistance.value;
-      const duration = +inputDuration.value;
-      const { lat, lng } = this.#mapEvent.latlng;
-      const location = await this._getLocation(lat, lng);
+    e.preventDefault();
+    //Get date from form
+    const type = inputType.value;
+    const distance = +inputDistance.value;
+    const duration = +inputDuration.value;
+    const { lat, lng } = this.#mapEvent.latlng;
+    const location = await this._getLocation(lat, lng);
 
-      let workout;
+    let workout;
+    //check if data is valid
+    const validInputs = function (...inputs) {
+      return inputs.every(inp => Number.isFinite(inp));
+    };
+    const positiveInputs = (...inputs) => inputs.every(inp => inp > 0);
+
+    //If workout running, create running object
+    if (type === 'running') {
+      const cadence = +inputCadence.value;
       //check if data is valid
-      const validInputs = function (...inputs) {
-        return inputs.every(inp => Number.isFinite(inp));
-      };
-      const positiveInputs = (...inputs) => inputs.every(inp => inp > 0);
-
-      //If workout running, create running object
-      if (type === 'running') {
-        const cadence = +inputCadence.value;
-        //check if data is valid
-        if (
-          !validInputs(distance, duration, cadence) ||
-          !positiveInputs(distance, duration, cadence)
-        ) {
-          this._renderError.call(this, {
-            message: 'Inputs have to be positive numbers',
-          });
-          throw new Error();
-        }
-
-        //create running object
-        workout = new Running(
-          distance,
-          duration,
-          [lat, lng],
-          location,
-          cadence
-        );
+      if (
+        !validInputs(distance, duration, cadence) ||
+        !positiveInputs(distance, duration, cadence)
+      ) {
+        this._renderError.call(this, {
+          message: 'Inputs have to be positive numbers',
+        });
+        return;
       }
 
-      //If workout cycling, create cycling object
-      if (type === 'cycling') {
-        const elevation = +inputElevation.value;
-        //check if data is valid
-        if (
-          !validInputs(distance, duration, elevation) ||
-          !positiveInputs(distance, duration)
-        ) {
-          this._renderError.call(this, {
-            message: 'Inputs have to be positive numbers',
-          });
-          throw new Error();
-        }
-        //create cycling object
-        workout = new Cycling(
-          distance,
-          duration,
-          [lat, lng],
-          location,
-          elevation
-        );
-      }
-
-      //Add new object to workout array
-      this.#workouts.push(workout);
-
-      //Render workout on map as marker
-      this._renderWorkoutMarker(workout);
-
-      //Render workout on list
-      this._renderWorkout(workout);
-
-      //Hide form + Clear input fields
-      this._hideForm();
-
-      //Set local storage to all workouts
-      this._setLocalStorage();
-    } catch (err) {
-      this._hideForm();
+      //create running object
+      workout = new Running(distance, duration, [lat, lng], location, cadence);
     }
+
+    //If workout cycling, create cycling object
+    if (type === 'cycling') {
+      const elevation = +inputElevation.value;
+      //check if data is valid
+      if (
+        !validInputs(distance, duration, elevation) ||
+        !positiveInputs(distance, duration)
+      ) {
+        this._renderError.call(this, {
+          message: 'Inputs have to be positive numbers',
+        });
+        return;
+      }
+      //create cycling object
+      workout = new Cycling(
+        distance,
+        duration,
+        [lat, lng],
+        location,
+        elevation
+      );
+    }
+
+    //Add new object to workout array
+    this.#workouts.push(workout);
+
+    //Render workout on map as marker
+    this._renderWorkoutMarker(workout);
+
+    //Render workout on list
+    this._renderWorkout(workout);
+
+    //Hide form + Clear input fields
+    this._hideForm();
+
+    //Set local storage to all workouts
+    this._setLocalStorage();
   }
   _renderWorkout(workout) {
     let html = `
@@ -450,6 +440,7 @@ class App {
   _toggleWindow() {
     overlay.classList.toggle('hidden');
     errorWindow.classList.toggle('hidden');
+    this._hideForm();
   }
 
   _renderError(error) {
