@@ -80,7 +80,6 @@ class App {
   #sorted = true;
 
   constructor() {
-    console.log('Hello');
     //Render Spinner
     this._renderSpinner();
     //Get Users Position
