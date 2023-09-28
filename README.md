@@ -4,6 +4,8 @@
 
 <img src="/src/img/mapty.png" alt="Mapty" >
 
+## [Mapty project](https://mapty-oop-project.netlify.app/)
+
 <p>The user can add/sort/delete running and cycling events through the map interactively.This project was inspired by Jonas Schmedtmann's Mapty project. Added some extra feature and coded by me.</p>
 
 ## Extra features:
