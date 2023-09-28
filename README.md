@@ -1,6 +1,6 @@
 # Mapty project
 
-<p> A simple web app to track your running and cycling routes and display them on the map according to the location. This app is built using HTML, CSS and JavaScript. It uses the Geolocation API to get the user's current location and the leaflet API to display the map. Also it uses Geocode API to get city according coordinates. The app also uses the Local Storage API to store the user's data in the browser. </p>
+<p> A simple web app to track your running and cycling routes and display them on the map according to the location. This app is built using HTML, CSS and JavaScript. It uses the Geolocation API to get the user's current location and the leaflet API to display the map. Also it uses BigDataCloud API to get city according coordinates. The app also uses the Local Storage API to store the user's data in the browser. </p>
 
 <img src="/src/img/mapty.png" alt="Mapty" >
 
@@ -13,7 +13,7 @@
 - Ability to sort workouts by a distance;
 - More realistic error messages;
 - Ability to position the map to show all workouts;
-- Ability to show Location with city and country (sometimes it is not working propertly, because of some limits)
+- Ability to show Location with city and country;
 - Added loader spinner.
 
 In the project directory, you can run:

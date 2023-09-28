@@ -78,8 +78,9 @@ class App {
   #workouts = [];
   #layer = [];
   #sorted = true;
-  #errorMessage = 'Something went wrong';
+
   constructor() {
+    console.log('Hello');
     //Render Spinner
     this._renderSpinner();
     //Get Users Position
@@ -150,7 +151,7 @@ class App {
     if (!mapE) return;
     this.#mapEvent = mapE;
     form.classList.remove('hidden');
-    inputDistance.focus();
+    setTimeout(() => inputDistance.focus(), 500);
   }
 
   _taggleElevationField() {
@@ -416,14 +417,16 @@ class App {
   async _getLocation(lat, lng) {
     try {
       const response = await fetch(
-        `https://geocode.xyz/${lat},${lng}?geoit=json`
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`
       );
       if (!response.ok) throw new Error(`Error: ${response.status}`);
+
       const data = await response.json();
-      return `${data.city}, ${data.country}`;
+      return `${data.city}, ${data.countryName}`;
     } catch (err) {
-      //alert(`Something went wrong!!!!!! ${err.message}`);
-      throw new Error('Can not get location');
+      this._renderError.call(this, {
+        message: `${err.message}`,
+      });
     }
   }
 
