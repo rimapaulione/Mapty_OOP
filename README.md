@@ -2,9 +2,9 @@
 
 <p> A simple web app to track your running and cycling routes and display them on the map according to the location. This app is built using HTML, CSS and JavaScript. It uses the Geolocation API to get the user's current location and the leaflet API to display the map. Also it uses BigDataCloud API to get city according coordinates. The app also uses the Local Storage API to store the user's data in the browser. </p>
 
-<img src="/src/img/mapty.png" alt="Mapty" >
+<img src="/src/img/mapty_img.png" alt="Mapty" >
 
-## [Mapty project](https://mapty-oop-project.netlify.app/)
+## [Mapty project preview](https://mapty-oop-project.netlify.app/)
 
 <p>The user can add/sort/delete running and cycling events through the map interactively.This project was inspired by Jonas Schmedtmann's Mapty project. Added some extra feature and coded by me.</p>
 
