@@ -449,7 +449,6 @@ class App {
     errorMessage.innerHTML = '';
     const markup = `
         <div class="error">
-      
             <p>❌ ${error.message} ❌</p>
         </div>
       `;
